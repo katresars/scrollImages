@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Viewer</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div id="controls">
+      <button id="load-local-btn">Load Local</button>
+      <button id="load-remote-btn">Load Remote</button>
+    </div>
+    <div id="image-container">
+      <div id="image-wrapper">
+        <div class="image-row"></div>
+      </div>
+    </div>
+    <div id="autoscroll-controls">
+      <button id="autoscroll-btn">Autoscroll</button>
+      <input type="range" id="speed-bar" min="1" max="10" value="5">
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
