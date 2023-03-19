@@ -70,28 +70,59 @@ function addImage(img) {
 }
 
 // Autoscroll
-let intervalID = null;
+let animationID = null;
+
 autoscrollBtn.addEventListener("click", function () {
-  if (intervalID) {
+  if (animationID) {
     // Stop autoscroll
-    clearInterval(intervalID);
-    intervalID = null;
+    cancelAnimationFrame(animationID);
+    animationID = null;
     autoscrollBtn.innerHTML = "Autoscroll";
   } else {
     // Start autoscroll
-    intervalID = setInterval(function () {
-      imageWrapper.scrollBy(0, speedBar.value * 1); // Increase the scroll speed by multiplying with a factor of 2
-    }, 25); // Decrease the interval time to increase the scroll speed
+    let start = null;
+    const scrollStep = speedBar.value;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      imageWrapper.scrollBy(0, scrollStep);
+      if (imageWrapper.scrollTop >= imageWrapper.scrollHeight - imageWrapper.offsetHeight) {
+        imageWrapper.scrollTo(0, 0);
+      }
+      if (progress < 20000) {
+        animationID = requestAnimationFrame(step);
+      } else {
+        cancelAnimationFrame(animationID);
+        animationID = null;
+        autoscrollBtn.innerHTML = "Autoscroll";
+      }
+    };
+    animationID = requestAnimationFrame(step);
     autoscrollBtn.innerHTML = "Stop";
   }
 });
 
 // Change autoscroll speed
 speedBar.addEventListener("input", function () {
-  if (intervalID) {
-    clearInterval(intervalID);
-    intervalID = setInterval(function () {
-      imageWrapper.scrollBy(0, speedBar.value * 2); // Increase the scroll speed by multiplying with a factor of 2
-    }, 25); // Decrease the interval time to increase the scroll speed
+  if (animationID) {
+    cancelAnimationFrame(animationID);
+    let start = null;
+    const scrollStep = speedBar.value;
+    const step = (timestamp) => {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      imageWrapper.scrollBy(0, scrollStep);
+      if (imageWrapper.scrollTop >= imageWrapper.scrollHeight - imageWrapper.offsetHeight) {
+        imageWrapper.scrollTo(0, 0);
+      }
+      if (progress < 20000) {
+        animationID = requestAnimationFrame(step);
+      } else {
+        cancelAnimationFrame(animationID);
+        animationID = null;
+      }
+    };
+    animationID = requestAnimationFrame(step);
   }
 });
+
