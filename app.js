@@ -80,8 +80,8 @@ autoscrollBtn.addEventListener("click", function () {
   } else {
     // Start autoscroll
     intervalID = setInterval(function () {
-      imageContainer.scrollBy(0, speedBar.value);
-    }, 50);
+      imageWrapper.scrollBy(0, speedBar.value * 1); // Increase the scroll speed by multiplying with a factor of 2
+    }, 25); // Decrease the interval time to increase the scroll speed
     autoscrollBtn.innerHTML = "Stop";
   }
 });
@@ -91,7 +91,7 @@ speedBar.addEventListener("input", function () {
   if (intervalID) {
     clearInterval(intervalID);
     intervalID = setInterval(function () {
-      imageContainer.scrollBy(0, speedBar.value);
-    }, 50);
+      imageWrapper.scrollBy(0, speedBar.value * 2); // Increase the scroll speed by multiplying with a factor of 2
+    }, 25); // Decrease the interval time to increase the scroll speed
   }
 });
